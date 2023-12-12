@@ -1,7 +1,8 @@
 // import multer from "multer";
 import fs from "fs";
 import { productModel } from "../models/productModel.js";
-
+import path from "path";
+import { mkdirp } from "mkdirp";
 //get products
 
 export const getProduct = async (req, res) => {
@@ -50,48 +51,41 @@ export const getProductByMaSp = async (req, res) => {
   }
 };
 
-////upload img
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "upload/");
-//   },
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now();
-//     cb(null, uniqueSuffix + file.originalname);
-//   },
-// });
-
-// const upload = multer({ storage: storage }).single("image");
-// const doUploadFile = async (imgFile) => {
-//   const img = imgFile.filename;
-//   try {
-//     await Image.create({ image: img });
-//     console.log("Thêm ảnh thành công");
-//     return true;
-//   } catch (err) {
-//     return false;
-//     console.log("Thêm ảnh thất bại");
-//   }
-// };
-//create product
 export const createProduct = async (req, res) => {
   try {
-    // const img = {
-    //   data: fs.readFileSync("upload/", req.file.filename),
-    //   contentType: "image/png",
-    // };
     const newProduct = req.body;
     console.log(req.body);
     console.log(req.files);
     const maxMaSp = await productModel.find().sort({ masp: -1 }).limit(1);
     console.log(maxMaSp[0]);
     newProduct["masp"] = Number(maxMaSp[0].masp) + 1;
-    // newProduct["img"] = img;
+    // newProduct["img"] = filename;
     console.log(newProduct);
     const product = new productModel(newProduct);
     await product.save();
     res.status(200).json(product);
     console.log("product", product);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};
+export const createImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      res.status(400).send("No file uploaded");
+      console.log("no file to upload");
+      return;
+    }
+    console.log(req.file);
+    console.log("1");
+    // Lưu file ảnh vào thư mục upload
+    const filename = req.file.filename;
+    // Trả về thông báo thành công
+    res.status(200).json({
+      success: true,
+      filename: filename,
+    });
   } catch (err) {
     res.status(500).json({ error: err });
     console.log("err");

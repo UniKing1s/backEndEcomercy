@@ -5,6 +5,9 @@ import products from "./router/products.js";
 import accounts from "./router/accounts.js";
 import mongoose from "mongoose";
 import "dotenv/config.js";
+import multer from "multer";
+import path from "path";
+import { mkdirp } from "mkdirp";
 const app = express();
 // const url = `${process.env.MongoDB_url}`;
 app.use(bodyParser.json({ limit: "30mb" }));
@@ -16,6 +19,20 @@ app.use(
     credentials: true,
   })
 );
+// use to show image
+app.use(express.static("public"));
+////sử dụng multer để sử lí upload file
+// Tạo thư mục upload
+const uploadDir = path.join(process.cwd(), "public/images");
+mkdirp.sync(uploadDir);
+const storage = multer.diskStorage({
+  destination: uploadDir,
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+app.use(multer({ storage }).single("image"));
+
 // , {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true,
