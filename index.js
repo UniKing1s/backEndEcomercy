@@ -9,7 +9,13 @@ const app = express();
 // const url = `${process.env.MongoDB_url}`;
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ extends: true, limit: "30mb" }));
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://front-end-ecommerce-black.vercel.app"],
+    methods: ["POST", "PUT", "GET", "DELETE"],
+    credentials: true,
+  })
+);
 // , {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true,
