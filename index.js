@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import products from "./router/products.js";
 import accounts from "./router/accounts.js";
+import bills from "./router/bills.js";
 import mongoose from "mongoose";
 import "dotenv/config.js";
 import multer from "multer";
@@ -13,34 +14,22 @@ const app = express();
 // const url = `${process.env.MongoDB_url}`;
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ extends: true, limit: "30mb" }));
+// app.use(
+//   cors({
+//     origin: ["https://web-shop-nhom5-git-main-uniking1s.vercel.app"],
+//     methods: ["POST", "PUT", "GET", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: ["https://web-shop-nhom5-git-main-uniking1s.vercel.app"],
+    origin: ["http://localhost:3000"],
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
   })
 );
-// app.use(
-//   cors({
-//     origin: ["https://front-end-ecommerce-beta.vercel.app"],
-//     methods: ["POST", "PUT", "GET", "DELETE"],
-//     credentials: true,
-//   })
-// );
-// app.use(
-//   cors({
-//     origin: ["http://localhost:3000"],
-//     methods: ["POST", "PUT", "GET", "DELETE"],
-//     credentials: true,
-//   })
-// );
-// app.use(
-//   cors({
-//     origin: ["https://web-shop-nhom5-uniking1s.vercel.app"],
-//     methods: ["POST", "PUT", "GET", "DELETE"],
-//     credentials: true,
-//   })
-// );
+
 // use to show image
 app.use(express.static("public"));
 ////sử dụng multer để sử lí upload file
@@ -116,5 +105,6 @@ app.post("/deleteImg/", async (req, res) => {
 });
 app.use("/products", products);
 app.use("/accounts", accounts);
+app.use("/bills", bills);
 // app.use("/product", products);
 // app.use("/product", products);
