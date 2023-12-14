@@ -54,11 +54,20 @@ export const getProductByMaSp = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const newProduct = req.body;
+    console.log("body");
     console.log(req.body);
+    console.log("file");
     console.log(req.files);
     const maxMaSp = await productModel.find().sort({ masp: -1 }).limit(1);
-    console.log(maxMaSp[0]);
-    newProduct["masp"] = Number(maxMaSp[0].masp) + 1;
+    if (!maxMaSp[0]) {
+      console.log("k có max mã");
+      newProduct["masp"] = 1;
+      console.log(maxMaSp[0]);
+    } else {
+      console.log("có max mã");
+      console.log(maxMaSp[0]);
+      newProduct["masp"] = Number(maxMaSp[0].masp) + 1;
+    }
     // newProduct["img"] = filename;
     console.log(newProduct);
     const product = new productModel(newProduct);
@@ -78,9 +87,11 @@ export const createImage = async (req, res) => {
       return;
     }
     console.log(req.file);
-    console.log("1");
+    // console.log("1");
     // Lưu file ảnh vào thư mục upload
     const filename = req.file.filename;
+    console.log(req.file.filename);
+
     // Trả về thông báo thành công
     res.status(200).json({
       success: true,

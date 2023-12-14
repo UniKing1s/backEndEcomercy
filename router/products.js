@@ -34,5 +34,5 @@ router.put("/byMaSp/", getProductByMaSp);
 //delete product
 router.delete("/", deleteProduct);
 //update product
-router.post("/update", updateProduct);
+router.post("/update/", updateProduct);
 export default router;

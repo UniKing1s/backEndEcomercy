@@ -8,6 +8,7 @@ import "dotenv/config.js";
 import multer from "multer";
 import path from "path";
 import { mkdirp } from "mkdirp";
+import fs from "fs";
 const app = express();
 // const url = `${process.env.MongoDB_url}`;
 app.use(bodyParser.json({ limit: "30mb" }));
@@ -19,6 +20,13 @@ app.use(
     credentials: true,
   })
 );
+// app.use(
+//   cors({
+//     origin: ["http://localhost:3000"],
+//     methods: ["POST", "PUT", "GET", "DELETE"],
+//     credentials: true,
+//   })
+// );
 // use to show image
 app.use(express.static("public"));
 ////sử dụng multer để sử lí upload file
@@ -28,7 +36,32 @@ mkdirp.sync(uploadDir);
 const storage = multer.diskStorage({
   destination: uploadDir,
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(
+      null,
+      new Date().getFullYear() +
+        (new Date().getMonth() + 1 < 10
+          ? "0" + (new Date().getMonth() + 1)
+          : new Date().getMonth() + 1) +
+        "" +
+        (new Date().getUTCDate() < 10
+          ? "0" + new Date().getUTCDate()
+          : new Date().getUTCDate()) +
+        "" +
+        (new Date().getHours() < 10
+          ? "0" + new Date().getHours()
+          : new Date().getHours()) +
+        "" +
+        (new Date().getMinutes() < 10
+          ? "0" + new Date().getMinutes()
+          : new Date().getMinutes()) +
+        "" +
+        (new Date().getSeconds() < 10
+          ? "0" + new Date().getSeconds()
+          : new Date().getSeconds()) +
+        "" +
+        new Date().getMilliseconds() +
+        file.originalname
+    );
   },
 });
 app.use(multer({ storage }).single("image"));
@@ -46,6 +79,27 @@ mongoose
   .catch(() => {
     console.log("connected fail");
   });
+
+//xóa file trong thưu mục
+// Xóa file
+
+app.post("/deleteImg/", async (req, res) => {
+  try {
+    const fileName = req.body.fileName;
+    console.log("fileNAme");
+    console.log(fileName);
+    fs.unlink("public/images/" + fileName, (err) => {
+      if (err) {
+        res.status(500).json({ err: err });
+      } else {
+        res.status(200).json({ info: "Xóa thành công file " + fileName });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+});
 app.use("/products", products);
 app.use("/accounts", accounts);
 // app.use("/product", products);
