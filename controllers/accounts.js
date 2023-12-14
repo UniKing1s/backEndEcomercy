@@ -63,7 +63,7 @@ export const createAccount = async (req, res) => {
       res.status(200).json(account);
       console.log("account", account);
     } else {
-      res.status(201).json({ error: "Tài khoản đã tồn tại" });
+      res.status(500).json({ error: "Tài khoản đã tồn tại" });
       console.log("err");
     }
   } catch (err) {
