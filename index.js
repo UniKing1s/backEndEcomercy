@@ -13,13 +13,13 @@ const app = express();
 // const url = `${process.env.MongoDB_url}`;
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ extends: true, limit: "30mb" }));
-app.use(
-  cors({
-    origin: ["https://front-end-ecommerce-beta.vercel.app"],
-    methods: ["POST", "PUT", "GET", "DELETE"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["https://front-end-ecommerce-beta.vercel.app"],
+//     methods: ["POST", "PUT", "GET", "DELETE"],
+//     credentials: true,
+//   })
+// );
 // app.use(
 //   cors({
 //     origin: ["http://localhost:3000"],
@@ -27,6 +27,13 @@ app.use(
 //     credentials: true,
 //   })
 // );
+app.use(
+  cors({
+    origin: ["https://web-shop-nhom5-uniking1s.vercel.app"],
+    methods: ["POST", "PUT", "GET", "DELETE"],
+    credentials: true,
+  })
+);
 // use to show image
 app.use(express.static("public"));
 ////sử dụng multer để sử lí upload file
