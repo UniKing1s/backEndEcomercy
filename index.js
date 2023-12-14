@@ -15,7 +15,7 @@ app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ extends: true, limit: "30mb" }));
 app.use(
   cors({
-    origin: ["https://front-end-ecommerce-black.vercel.app"],
+    origin: ["https://front-end-ecommerce-beta.vercel.app"],
     methods: ["POST", "PUT", "GET", "DELETE"],
     credentials: true,
   })
