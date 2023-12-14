@@ -12,6 +12,21 @@ export const getAccount = async (req, res) => {
     console.log("err");
   }
 };
+export const getAccountByUser = async (req, res) => {
+  try {
+    const username = req.body.username;
+    const accounts = await accountModel.findOne({ username: username });
+    if (accounts) {
+      res.status(200).json({ info: "tài khoản đúng" });
+    } else {
+      res.status(500).json({ err: "không có dữ liệu" });
+    }
+    console.log("account", accounts);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};
 export const getAccountToLogin = async (req, res) => {
   try {
     const accountToLogin = req.body;
