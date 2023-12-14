@@ -34,13 +34,13 @@ app.use(
 //     credentials: true,
 //   })
 // );
-app.use(
-  cors({
-    origin: ["https://web-shop-nhom5-uniking1s.vercel.app"],
-    methods: ["POST", "PUT", "GET", "DELETE"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["https://web-shop-nhom5-uniking1s.vercel.app"],
+//     methods: ["POST", "PUT", "GET", "DELETE"],
+//     credentials: true,
+//   })
+// );
 // use to show image
 app.use(express.static("public"));
 ////sử dụng multer để sử lí upload file
