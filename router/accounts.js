@@ -10,6 +10,7 @@ import {
   deleteAccount,
   getAccount,
   getAccountToLogin,
+  getAccountByUser,
   updateAccount,
 } from "../controllers/accounts.js";
 const router = express.Router();
@@ -18,6 +19,8 @@ const router = express.Router();
 router.get("/", getAccount);
 //get account to login
 router.post("/login/", getAccountToLogin);
+//get account by user
+router.post("/getByUsser/", getAccountByUser);
 //create account
 router.post("/", createAccount);
 // router.delete("/product", deleteProduct);
