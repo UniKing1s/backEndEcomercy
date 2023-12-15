@@ -23,3 +23,26 @@ export const createBill = async (req, res) => {
     // console.log(res.status);
   }
 };
+export const getBills = async (req, res) => {
+  try {
+    const Bills = await billModel.find();
+    res.status(200).json(Bills);
+    console.log("bill", Bills);
+  } catch (err) {
+    res.status(500).json({ error: "Lấy thông tin tất cả hóa đơn thất bại" });
+    // console.log("err");
+    // console.log(res.status);
+  }
+};
+export const getBillByUser = async (req, res) => {
+  try {
+    const user = req.body;
+    const Bills = await billModel.find({ username: user.username });
+    res.status(200).json(Bills);
+    console.log("bill", Bills);
+  } catch (err) {
+    res.status(500).json({ error: "Lấy thông tin tất cả hóa đơn thất bại" });
+    // console.log("err");
+    // console.log(res.status);
+  }
+};

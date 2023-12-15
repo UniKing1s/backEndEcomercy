@@ -9,6 +9,11 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    ngayXuatHoaDon: {
+      type: Date,
+      required: false,
+      default: new Date(),
+    },
     tenNguoiNhan: {
       type: String,
       required: true,
