@@ -133,3 +133,23 @@ export const updateProduct = async (req, res) => {
     console.log("err");
   }
 };
+export const getSearchProduct = async (req, res) => {
+  try {
+    const productsObject = req.body;
+    console.log(productsObject);
+    const products = await productModel.find({
+      name: { $regex: productsObject.name, $options: "i" },
+    });
+    // { name: { $regex: 'TP Hồ Chí Minh', $options: 'i' } }
+    res.status(200).json(products);
+    console.log("product", products);
+    // console.log(req.body);
+    // const book = await sachModel.findOne({ maSach: bookObject.maSach });
+    // res.status(200).json(book);
+
+    // console.log(res.data.accessToken);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log("err");
+  }
+};

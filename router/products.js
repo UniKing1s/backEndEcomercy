@@ -6,6 +6,7 @@ import {
   getProduct,
   getProductById,
   getProductByMaSp,
+  getSearchProduct,
   updateProduct,
 } from "../controllers/products.js";
 // import multer from "multer";
@@ -26,6 +27,9 @@ const router = express.Router();
 router.get("/", getProduct);
 //create products
 router.post("/", createProduct);
+//get product from search
+router.post("/search/", getSearchProduct);
+//upload image
 router.post("/uploadImage/", createImage);
 //get product byId()
 router.put("/byId/", getProductById);
